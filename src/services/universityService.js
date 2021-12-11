@@ -13,6 +13,9 @@ connection.connect()
 
 /**
  * Get universities
+ * 
+ * @param {*} callback 
+ * @return void
  */
 export const getUniversities = function (callback) {
     connection.query('SELECT * FROM universities', (error,results) => {
@@ -22,3 +25,18 @@ export const getUniversities = function (callback) {
         callback(results,null)
     })
  }
+
+/**
+ * Get university by id
+ * 
+ * @param {*} callback 
+ * @return void
+ */
+export const getUniversity = function (request, callback) {
+    connection.query('SELECT * FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
+        if (results.length == 0) {
+            callback(null,error)
+        }
+            callback(results,null)
+    })
+}

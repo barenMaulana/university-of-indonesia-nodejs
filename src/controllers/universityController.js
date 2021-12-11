@@ -1,5 +1,12 @@
 import mysql from 'mysql'
-import { getUniversities } from '../services/universityService.js'
+import { getUniversities, getUniversity } from '../services/universityService.js'
+
+/**
+ * job of the controller to take the request 
+ * and forward it to the service to be processed, 
+ * and in return the response.
+ * 
+ */
 
 /**
  * database connection setting
@@ -37,18 +44,18 @@ connection.connect()
  * Get university
  */
  export const show = (request,response) => {
-    connection.query('SELECT * FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
-        if (results.length == 0) {
+    getUniversity(request, (university,error) => {
+        if (error != null) {
             return response.status(400).json({
                 "status" : "failed",
                 "message" : "wrong university id",
                 "data" : null
             })
         }
-        return response.json({
+        return response.status(200).json({
             "status" : "success",
-            "message" : "Detail of university",
-            "data" : results[0]
+            "message" : "Details of university",
+            "data" : university
         })
     })
 } 
