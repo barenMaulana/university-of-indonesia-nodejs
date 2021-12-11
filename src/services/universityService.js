@@ -55,3 +55,18 @@ export const createUniversity = function (request,callback){
         callback(results,null)
     })
 }
+
+/**
+ * Update university
+ * 
+ * @param {*} callback
+ * @return void
+ */
+export const updateUniversity = function (request,callback){
+    connection.query('UPDATE universities SET name = ?, address = ?, abbreviation = ? WHERE id = ?',[request.body.name,request.body.address,request.body.abbreviation,request.params.id],(error,results,fields) =>{
+        if (error) {
+            callback(null,error)
+        }
+        callback(results,null)
+    })
+}

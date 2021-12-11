@@ -1,5 +1,5 @@
 import mysql from 'mysql'
-import { getUniversities, getUniversity, createUniversity } from '../services/universityService.js'
+import { getUniversities, getUniversity, createUniversity, updateUniversity } from '../services/universityService.js'
 
 /**
  * job of the controller to take the request 
@@ -84,20 +84,22 @@ connection.connect()
  * Update university
  */
  export const update = (request,response) => {
-    connection.query('UPDATE universities SET name = ?, address = ?, abbreviation = ? WHERE id = ?',[request.body.name,request.body.address,request.body.abbreviation,request.params.id],(error,results,fields) =>{
-        if (error) {
+
+    updateUniversity(request,(university,error) => {
+        if (error != null) {
             return response.status(500).json({
                 "status" : "failed",
                 "message" : error,
                 "data" : null
             })
         }
-        return response.json({
+        return response.status(202).json({
             "status" : "success",
-            "message" : "University updated",
+            "message" : "university udpated",
             "data" : null
-        });
+        })
     })
+    
 }
 
 /**
