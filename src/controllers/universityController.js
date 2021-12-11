@@ -1,5 +1,5 @@
 import mysql from 'mysql'
-import { getUniversities, getUniversity, createUniversity, updateUniversity } from '../services/universityService.js'
+import { getUniversities, getUniversity, createUniversity, updateUniversity, deleteUniversity } from '../services/universityService.js'
 
 /**
  * job of the controller to take the request 
@@ -106,17 +106,17 @@ connection.connect()
  * Delete university
  */
  export const destroy = (request,response) => {
-    connection.query('DELETE FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
-        if (error) {
+    deleteUniversity(request,(university,error) => {
+        if (error != null) {
             return response.status(500).json({
                 "status" : "failed",
                 "message" : error,
                 "data" : null
             })
         }
-        return response.status(204).json({
+        return response.status(202).json({
             "status" : "success",
-            "message" : "Uiversity deleted",
+            "message" : "university deleted",
             "data" : null
         })
     })

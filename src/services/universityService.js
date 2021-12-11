@@ -70,3 +70,18 @@ export const updateUniversity = function (request,callback){
         callback(results,null)
     })
 }
+
+/**
+ * Delete university
+ * 
+ * @param {*} callback
+ * @return void
+ */
+export const deleteUniversity = function (request,callback){
+    connection.query('DELETE FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
+        if (error) {
+            callback(null,error)
+        }
+        callback(results,null)
+    })
+}
