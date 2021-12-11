@@ -1,5 +1,5 @@
 import mysql from 'mysql'
-import { getUniversities, getUniversity } from '../services/universityService.js'
+import { getUniversities, getUniversity, createUniversity } from '../services/universityService.js'
 
 /**
  * job of the controller to take the request 
@@ -64,8 +64,8 @@ connection.connect()
  * Create university
  */
  export const store = (request,response) => {
-    connection.query('INSERT INTO universities SET ?',request.body,(error,result,fields) => {
-        if (error) {
+    createUniversity(request,(university,error) => {
+        if (error != null) {
             return response.status(500).json({
                 "status" : "failed",
                 "message" : error,
@@ -74,7 +74,7 @@ connection.connect()
         }
         return response.status(201).json({
             "status" : "success",
-            "message" : "New university added",
+            "message" : "new university added",
             "data" : null
         })
     })

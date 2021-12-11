@@ -40,3 +40,18 @@ export const getUniversity = function (request, callback) {
             callback(results,null)
     })
 }
+
+/**
+ * Insert university
+ * 
+ * @param {*} callback
+ * @return void
+ */
+export const createUniversity = function (request,callback){
+    connection.query('INSERT INTO universities SET ?',request.body,(error,results,fields) => {
+        if (error) {
+            callback(null,error)
+        }
+        callback(results,null)
+    })
+}
