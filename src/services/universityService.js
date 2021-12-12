@@ -21,8 +21,9 @@ export const getUniversities = function (callback) {
     connection.query('SELECT * FROM universities', (error,results) => {
         if (error) {
             callback(null,error)
+        }else{
+            callback(results,null)
         }
-        callback(results,null)
     })
  }
 
@@ -52,8 +53,9 @@ export const createUniversity = function (request,callback){
     connection.query('INSERT INTO universities SET ?',request.body,(error,results,fields) => {
         if (error) {
             callback(null,error)
+        }else{
+            callback(results,null)
         }
-        callback(results,null)
     })
 }
 
@@ -64,11 +66,13 @@ export const createUniversity = function (request,callback){
  * @return void
  */
 export const updateUniversity = function (request,callback){
-    connection.query('UPDATE universities SET name = ?, address = ?, abbreviation = ? WHERE id = ?',[request.body.name,request.body.address,request.body.abbreviation,request.params.id],(error,results,fields) =>{
+    connection.query('UPDATE universities SET name = ?, address = ?, abbreviation = ? WHERE id = ?',[request.body.name,request.body.address,request.body.abbreviation,request.params.id],
+    (error,results,fields) =>{
         if (error) {
             callback(null,error)
+        }else{
+            callback(results,null)
         }
-        callback(results,null)
     })
 }
 
@@ -82,7 +86,8 @@ export const deleteUniversity = function (request,callback){
     connection.query('DELETE FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
         if (error) {
             callback(null,error)
+        }else{
+            callback(results,null)
         }
-        callback(results,null)
     })
 }

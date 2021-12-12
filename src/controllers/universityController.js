@@ -66,22 +66,29 @@ import { getUniversities, getUniversity, createUniversity, updateUniversity, del
  * Update university
  */
  export const update = (request,response) => {
-
-    updateUniversity(request,(university,error) => {
+    getUniversity(request,(university, error) => {
         if (error != null) {
-            return response.status(500).json({
+            return response.status(400).json({
                 "status" : "failed",
                 "message" : error,
                 "data" : null
             })
         }
-        return response.status(202).json({
-            "status" : "success",
-            "message" : "university udpated",
-            "data" : null
+        updateUniversity(request,(university,error) => {
+            if (error != null) {
+                return response.status(500).json({
+                    "status" : "failed",
+                    "message" : error,
+                    "data" : null
+                })
+            }
+            return response.status(202).json({
+                "status" : "success",
+                "message" : "university udpated",
+                "data" : null
+            })
         })
     })
-    
 }
 
 /**
