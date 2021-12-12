@@ -35,9 +35,10 @@ export const getUniversities = function (callback) {
 export const getUniversity = function (request, callback) {
     connection.query('SELECT * FROM universities WHERE id = ?',[request.params.id],(error,results,fields) => {
         if (results.length == 0) {
-            callback(null,error)
-        }
+            callback(null,"No university found with that id")
+        }else{
             callback(results,null)
+        }
     })
 }
 

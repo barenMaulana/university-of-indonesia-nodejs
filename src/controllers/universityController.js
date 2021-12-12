@@ -1,23 +1,5 @@
-import mysql from 'mysql'
 import { getUniversities, getUniversity, createUniversity, updateUniversity, deleteUniversity } from '../services/universityService.js'
 
-/**
- * job of the controller to take the request 
- * and forward it to the service to be processed, 
- * and in return the response.
- * 
- */
-
-/**
- * database connection setting
- */
- const connection = mysql.createConnection({
-    host : 'localhost',
-    user : 'root',
-    password : '',
-    database : 'university'
-})
-connection.connect()
 
 /**
  * Get universities
@@ -48,7 +30,7 @@ connection.connect()
         if (error != null) {
             return response.status(400).json({
                 "status" : "failed",
-                "message" : "wrong university id",
+                "message" : error,
                 "data" : null
             })
         }
