@@ -95,18 +95,27 @@ import { getUniversities, getUniversity, createUniversity, updateUniversity, del
  * Delete university
  */
  export const destroy = (request,response) => {
-    deleteUniversity(request,(university,error) => {
+    getUniversity(request,(university, error) => {
         if (error != null) {
-            return response.status(500).json({
+            return response.status(400).json({
                 "status" : "failed",
                 "message" : error,
                 "data" : null
             })
         }
-        return response.status(202).json({
-            "status" : "success",
-            "message" : "university deleted",
-            "data" : null
+        deleteUniversity(request,(university,error) => {
+            if (error != null) {
+                return response.status(500).json({
+                    "status" : "failed",
+                    "message" : error,
+                    "data" : null
+                })
+            }
+            return response.status(202).json({
+                "status" : "success",
+                "message" : "university deleted",
+                "data" : null
+            })
         })
     })
 }
